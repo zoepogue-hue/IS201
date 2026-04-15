@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+  <title>Personal Devotional Generator</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      padding: 40px;
+      transition: background 0.5s ease;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    select, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button {
+      background-color: #a68a64;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .box {
+      margin-top: 25px;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #fff;
+      margin: 10px auto;
+      padding: 10px;
+      max-width: 500px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+
+
+<body>
+    <a href="../index.html">Home</a> | 
+    <a href="books.html">Books</a> | 
+    <a href="resume.html">Resume</a> 
+
+  <h1>Devotional Generator</h1>
+  <p>How are you feeling today?</p>
+
+  <select id="mood">
+    <option value="stressed">Stressed</option>
+    <option value="happy">Happy</option>
+    <option value="lost">Lost</option>
+    <option value="tired">Tired</option>
+  </select>
+
+  <br>
+
+  <button onclick="generateDevotional()">Generate</button>
+  <button onclick="saveDevotional()">Save This Devotional</button>
+
+  <div class="box">
+    <p id="thought">Thought will appear here</p>
+    <p id="scripture">Scripture will appear here</p>
+    <p id="action">Action will appear here</p>
+  </div>
+
+  <h3>Saved Devotionals</h3>
+  <ul id="history"></ul>
+
+  <script>
+    const devotionals = {
+      stressed: {
+        thought: [
+          "God is aware of your burdens.",
+          "You don’t have to carry everything at once."
+        ],
+        scripture: [
+          "“Be still, and know that I am God.” – Psalm 46:10",
+          "“Cast thy burden upon the Lord.” – Psalm 55:22"
+        ],
+        action: [
+          "Take 3 deep breaths and pause.",
+          "Pray for peace, even briefly."
+        ],
+        color: "linear-gradient(to bottom, #dfe9f3, #ffffff)"
+      },
+
+      happy: {
+        thought: [
+          "Joy is a gift—notice it.",
+          "Gratitude multiplies happiness."
+        ],
+        scripture: [
+          "“Rejoice evermore.” – 1 Thessalonians 5:16",
+          "“This is the day which the Lord hath made.” – Psalm 118:24"
+        ],
+        action: [
+          "Share your happiness with someone.",
+          "Write down what made today good."
+        ],
+        color: "linear-gradient(to bottom, #fff6cc, #ffe680)"
+      },
+
+      lost: {
+        thought: [
+          "It’s okay not to have everything figured out.",
+          "God guides step by step."
+        ],
+        scripture: [
+          "Trust in the Lord with all thine heart. – Proverbs 3:5",
+          "I will lead thee by the hand. – Isaiah 41:13"
+        ],
+        action: [
+          "Take one small step forward.",
+          "Ask for guidance in prayer."
+        ],
+        color: "linear-gradient(to bottom, #e0c3fc, #8ec5fc)"
+      },
+
+      tired: {
+        thought: [
+          "Rest is part of growth.",
+          "You are allowed to slow down."
+        ],
+        scripture: [
+          "“Come unto me... and I will give you rest.” – Matthew 11:28",
+          "“My grace is sufficient for thee.” – 2 Corinthians 12:9"
+        ],
+        action: [
+          "Take a short break.",
+          "Do something calming for 5 minutes."
+        ],
+        color: "linear-gradient(to bottom, #cfd9df, #e2ebf0)"
+      }
+    };
+
+    function generateDevotional() {
+      const mood = document.getElementById("mood").value;
+      const data = devotionals[mood];
+
+      const thought = data.thought[Math.floor(Math.random() * data.thought.length)];
+      const scripture = data.scripture[Math.floor(Math.random() * data.scripture.length)];
+      const action = data.action[Math.floor(Math.random() * data.action.length)];
+
+      document.getElementById("thought").textContent = "💭 " + thought;
+      document.getElementById("scripture").textContent = "📖 " + scripture;
+      document.getElementById("action").textContent = "✅ " + action;
+
+      // 🎨 Change background based on mood
+      document.body.style.background = data.color;
+    }
+
+    function saveDevotional() {
+      const thought = document.getElementById("thought").textContent;
+      const scripture = document.getElementById("scripture").textContent;
+      const action = document.getElementById("action").textContent;
+
+      if (thought.includes("will appear")) {
+        alert("Generate a devotional first!");
+        return;
+      }
+
+      const li = document.createElement("li");
+      li.textContent = thought + " | " + scripture + " | " + action;
+
+      document.getElementById("history").appendChild(li);
+    }
+  </script>
+
+</body>
+</html>
